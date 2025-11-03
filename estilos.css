@@ -1,0 +1,216 @@
+/* --- Keyframes para Animações --- */
+@keyframes orbitar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cintilar {
+    0% { opacity: 0.7; }
+    50% { opacity: 0.2; }
+    100% { opacity: 0.7; }
+}
+
+@keyframes girar-galaxia {
+    from {
+        transform: rotate(0deg) scale(1.1);
+    }
+    to {
+        transform: rotate(360deg) scale(1.1);
+    }
+}
+
+/* --- Estilos Globais e do Contêiner --- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #000;
+    overflow: hidden;
+    position: relative;
+}
+
+.container-sistema {
+    width: 40em;
+    height: 40em;
+    position: relative; 
+}
+
+/* --- Estrelas/Galáxia de Fundo --- */
+.estrelas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    animation: girar-galaxia 300s linear infinite; 
+    
+    /* Gradiente para simular o centro brilhante da galáxia */
+    background: 
+        radial-gradient(circle at 50% 50%, 
+            rgba(100, 100, 255, 0.05) 0%, 
+            rgba(0, 0, 0, 0.9) 70%),
+        transparent;
+    z-index: 0;
+}
+
+/* Gera as estrelas com box-shadows */
+.estrelas::before, .estrelas::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: cintilar 5s ease-in-out infinite alternate;
+}
+
+.estrelas::before {
+    top: 50%;
+    left: 50%;
+    box-shadow: 
+        100px 20px #FFF, 200px 80px #FFF, 350px 150px #FFF, 
+        400px 30px #FFF, 150px 250px #FFF, 50px 300px #FFF,
+        -100px -50px #FFF, -200px -10px #FFF, -300px 100px #FFF,
+        -50px 200px #FFF, 250px -100px #FFF, 120px -250px #FFF,
+        -150px -180px #FFF, -250px 80px #FFF, 300px -200px #FFF;
+}
+
+.estrelas::after {
+    top: 30%;
+    left: 70%;
+    width: 1px;
+    height: 1px;
+    animation-delay: 2s;
+    box-shadow: 
+        50px 10px #EEE, 120px 60px #EEE, 250px 100px #EEE,
+        300px 10px #EEE, 100px 200px #EEE, 30px 250px #EEE,
+        -80px -30px #EEE, -150px -50px #EEE, -200px 70px #EEE,
+        -30px 150px #EEE, 200px -80px #EEE, 80px -180px #EEE,
+        -100px -120px #EEE, -180px 50px #EEE, 220px -150px #EEE;
+}
+
+
+/* --- SOL --- */
+
+.sol {
+    position: absolute;
+    top: 15em; 
+    left: 15em;
+    width: 10em;
+    height: 10em;
+    border-radius: 50%;
+    background-color: yellow;
+    box-shadow: 0 0 3em white;
+    z-index: 10;
+}
+
+/* --- Planeta B (Rápido) --- */
+.orbita-planeta-b {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; 
+    animation: orbitar 10s linear infinite;
+}
+.planeta-b {
+    position: absolute;
+    top: 10em; left: 18.5em; 
+    width: 3em; height: 3em;
+    border-radius: 50%;
+    background-color: #ff9900; 
+    animation: orbitar 10s linear infinite reverse;
+    z-index: 6;
+}
+
+/* --- Planeta com Anéis --- */
+.orbita-planeta-aneis {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; 
+    animation: orbitar 25s linear infinite;
+}
+.planeta-aneis {
+    position: absolute;
+    top: 5em; left: 17em; 
+    width: 6em; height: 6em;
+    border-radius: 50%;
+    background-color: #7b4f3b;
+    animation: orbitar 25s linear infinite reverse;
+    z-index: 7;
+}
+
+/* Criação dos Anéis */
+.planeta-aneis::before, .planeta-aneis::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 10em; height: 10em;
+    margin-top: -5em; margin-left: -5em;
+    
+    border: 0.4em solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    
+    /* Inclinação para efeito 3D */
+    transform: rotateX(70deg) skewX(20deg); 
+}
+
+/* Anel Traseiro */
+.planeta-aneis::after {
+    z-index: -1; 
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Anel Frontal (com corte para passar sobre o planeta) */
+.planeta-aneis::before {
+    z-index: 1; 
+    clip-path: polygon(0% 40%, 100% 40%, 100% 100%, 0% 100%);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* --- Terra e Lua --- */
+.orbita-terra {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; 
+    animation: orbitar 20s linear infinite; 
+}
+.terra {
+    position: absolute;
+    top: 2em; left: 17.5em; 
+    width: 5em; height: 5em;
+    border-radius: 50%;
+    background-color: aqua;
+    animation: orbitar 20s linear infinite reverse; 
+    z-index: 5;
+}
+.orbita-lua {
+    position: absolute;
+    top: -1em; left: -1em; width: 7em; height: 7em;
+    animation: orbitar 2s linear infinite; 
+}
+.lua {
+    position: absolute;
+    top: 0; left: 3.5em; 
+    width: 1.5em; height: 1.5em;
+    border-radius: 50%;
+    background-color: silver;
+}
+
+/* --- Planeta D (Lento) --- */
+.orbita-planeta-d { 
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; 
+    animation: orbitar 30s linear infinite; 
+}
+.planeta-d { 
+    position: absolute;
+    top: 0.5em; left: 19em; 
+    width: 2em; height: 2em;
+    border-radius: 50%;
+    background-color: #9933ff; 
+    animation: orbitar 30s linear infinite reverse; 
+    z-index: 4;
+}
